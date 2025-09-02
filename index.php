@@ -36,20 +36,48 @@ $tarefa = $TarefaDao->findAll();
             <label for="conclusion">data</label>
             <input type="date" name="conclusion" placeholder="Insira uma data de conclusao">
         </div>
-         <div>
+        <div>
             <label for="description">descricao</label>
             <input type="text" name="description" placeholder="Qual descricao da tarefa">
         </div>
         <input type="submit" value="salvar">
 
         <div>
-            <ul>
-                <?php foreach($tarefa as $tarefas): ?>
-                    <li><?= $tarefas->getName() ?> - <?= $tarefas->getTipo() ?> - <?= $tarefas->getStatus() ?> - <?= $tarefas->getConclusion() ?> - <?= $tarefas->getDescription() ?></li>
-                <?php endforeach; ?>
-            </ul>
+            <table border="2">
+                <thead>
+                    <tr>
+                        <td>id</td>
+                        <td>Nome</td>
+                        <td>tipo</td>
+                        <td>status</td>
+                        <td>data</td>
+                        <td>descricao</td>
+                        <td>deletar</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach ($tarefa as $tarefas): ?>
+
+                        <tr>
+                            <td><?= $tarefas->getId() ?></td>
+                            <td><?= $tarefas->getName() ?></td>
+                            <td><?= $tarefas->getTipo() ?></td>
+                            <td><?= $tarefas->getStatus() ?></td>
+                            <td><?= $tarefas->getConclusion() ?> </td>
+                            <td><?= $tarefas->getDescription() ?></td>
+                            <td>
+                                <a href="tarefaProcess.php?action=delete&id=<?= $tarefas->getId() ?>"
+                                    onclick="return confirm('Tem certeza?');">
+                                    Deletar
+
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+
+            </table>
+
+
         </div>
-        
     </form>
 
 </body>

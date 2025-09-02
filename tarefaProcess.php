@@ -2,26 +2,42 @@
 
 include_once("connection.php");
 include_once("DAO/TarefaDAO.php");
+include_once("models/Tarefa.php");
 
 $tarefaDAO = new TarefaDAO($conn);
 
-$name = $_POST["name"];
-$tipo = $_POST["tipo"];
-$status = $_POST["status"];
-$conclusion = $_POST["conclusion"];
-$description = $_POST["description"];
 
+$action = $_POST['action'] ?? $_GET['action'] ?? null;
 
-$newTarefa = new Tarefa();
+if ($action) {
+    switch ($action) {
+        
+        case 'create':
+            $name = $_POST["name"];
+            $tipo = $_POST["tipo"];
+            $status = $_POST["status"];
+            $conclusion = $_POST["conclusion"];
+            $description = $_POST["description"];
 
-$newTarefa->setName($name);
-$newTarefa->setTipo($tipo);
-$newTarefa->setStatus($status);
-$newTarefa->setConclusion($conclusion);
-$newTarefa->setDescription($description);
+            $newTarefa = new Tarefa();
+            $newTarefa->setName($name);
+            $newTarefa->setTipo($tipo);
+            $newTarefa->setStatus($status);
+            $newTarefa->setConclusion($conclusion);
+            $newTarefa->setDescription($description);
 
-$tarefaDAO->create($newTarefa);
+            $tarefaDAO->create($newTarefa);
+            break;
 
-header("location: index.php");
+      
+        case 'delete':
+            $id = $_GET['id'] ?? null;
+            if ($id && is_numeric($id)) {
+                $tarefaDAO->delete($id);
+            }
+            break;
+    }
+}
 
-?>
+header("Location: index.php");
+exit();

@@ -43,4 +43,15 @@
 
             $stmt->execute();
         }
+
+
+        public function delete($id){
+
+            $stmt = $this->conn->prepare("DELETE FROM tarefa WHERE `tarefa`.`id` = :id");
+
+            $stmt->bindValue(":id", $id);
+
+            $stmt->execute();
+
+        }
     }
