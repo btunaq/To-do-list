@@ -55,5 +55,5 @@
         public function create(Tarefa $tarefa);
         public function findAll();
         //public function updateStatus($id, $status);
-        //public function delete($id);
+        public function delete($id);
     }
