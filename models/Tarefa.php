@@ -54,6 +54,8 @@
     interface TarefaDAOInterface {
         public function create(Tarefa $tarefa);
         public function findAll();
-        //public function updateStatus($id, $status);
+        public function updateStatusCompleted($id);
         public function delete($id);
+        public function findCompletedTasks();
+        public function updateStatusOpen($id);
     }

@@ -15,7 +15,7 @@ if ($action) {
         case 'create':
             $name = $_POST["name"];
             $tipo = $_POST["tipo"];
-            $status = $_POST["status"];
+            $status = "Aberta";
             $conclusion = $_POST["conclusion"];
             $description = $_POST["description"];
 
@@ -34,6 +34,20 @@ if ($action) {
             $id = $_GET['id'] ?? null;
             if ($id && is_numeric($id)) {
                 $tarefaDAO->delete($id);
+            }
+            break;
+
+        case 'updateStatusCompleted':
+            $id = $_GET['id'] ?? null;
+            if($id && is_numeric($id)){
+                $tarefaDAO->updateStatusCompleted($id);
+            }
+            break;
+
+        case 'updateStatusOpen':
+            $id = $_GET['id'] ?? null;
+            if($id && is_numeric($id)){
+                $tarefaDAO->updateStatusOpen($id);
             }
             break;
     }
