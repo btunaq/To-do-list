@@ -2,7 +2,7 @@
 
 include_once("templates/header.php");
 
-if($userDao){
+if ($userDao) {
 
     $userDao->destroyToken();
 }

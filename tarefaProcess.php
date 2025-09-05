@@ -16,7 +16,7 @@ $action = $_POST['action'] ?? $_GET['action'] ?? null;
 
 if ($action && $userData) {
     switch ($action) {
-        
+
         case 'create':
             $name = $_POST["name"];
             $tipo = $_POST["tipo"];
@@ -34,7 +34,7 @@ if ($action && $userData) {
             $tarefaDAO->create($newTarefa, $userData->id);
             break;
 
-        
+
         case 'delete':
             $id = $_GET['id'] ?? null;
             if ($id && is_numeric($id)) {
@@ -44,14 +44,14 @@ if ($action && $userData) {
 
         case 'updateStatusCompleted':
             $id = $_GET['id'] ?? null;
-            if($id && is_numeric($id)){
+            if ($id && is_numeric($id)) {
                 $tarefaDAO->updateStatusCompleted($id);
             }
             break;
 
         case 'updateStatusOpen':
             $id = $_GET['id'] ?? null;
-            if($id && is_numeric($id)){
+            if ($id && is_numeric($id)) {
                 $tarefaDAO->updateStatusOpen($id);
             }
             break;
@@ -60,4 +60,3 @@ if ($action && $userData) {
 
 header("Location: index.php");
 exit();
-
