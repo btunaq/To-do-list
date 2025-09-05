@@ -1,32 +1,34 @@
 <?php
 
-    class User {
-        public $id;
-        public $name;
-        public $email;
-        public $password;
-        public $token;
+class User
+{
+    public $id;
+    public $name;
+    public $email;
+    public $password;
+    public $token;
 
 
-        public function generateToken(){
-            return bin2hex(random_bytes(50));
-        }
-        
-        public function generatePassword($password){
-            return password_hash($password, PASSWORD_DEFAULT);
-        }
+    public function generateToken()
+    {
+        return bin2hex(random_bytes(50));
     }
 
-    interface UserDAOInterface{
-        public function buildUser($data);
-        public function create(User $user, $authUser = false);
-        public function update(User $user, $redirect = true);
-        public function setTokenSession($token, $redirect = true);
-        public function authenticateUser($email, $password);
-        public function findByEmail($email);
-        public function findById($id);
-        public function findByToken($token);
-        public function verifyToken($protected = false);
-        public function destroyToken();
+    public function generatePassword($password)
+    {
+        return password_hash($password, PASSWORD_DEFAULT);
     }
-    
+}
+
+interface UserDAOInterface
+{
+    public function buildUser($data);
+    public function create(User $user, $authUser = false);
+    public function update(User $user, $redirect = true);
+    public function setTokenSession($token, $redirect = true);
+    public function authenticateUser($email, $password);
+    public function findByEmail($email);
+    public function findByToken($token);
+    public function verifyToken($protected = false);
+    public function destroyToken();
+}

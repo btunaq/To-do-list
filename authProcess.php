@@ -17,59 +17,53 @@ $type = filter_input(INPUT_POST, "type");
 
 if ($type === "register") {
 
-    $name = filter_input(INPUT_POST, "name");
-    $email = filter_input(INPUT_POST, "email");
-    $password = filter_input(INPUT_POST, "password");
-    $confirmpassword = filter_input(INPUT_POST, "confirmpassword");
+  $name = filter_input(INPUT_POST, "name");
+  $email = filter_input(INPUT_POST, "email");
+  $password = filter_input(INPUT_POST, "password");
+  $confirmpassword = filter_input(INPUT_POST, "confirmpassword");
 
 
-    if ($name && $email && $password) {
+  if ($name && $email && $password) {
 
-        if ($password === $confirmpassword) {
+    if ($password === $confirmpassword) {
 
-            if ($userDao->findByEmail($email) === false) {
+      if ($userDao->findByEmail($email) === false) {
 
-                $user = new User();
+        $user = new User();
 
-                $userToken = $user->generateToken();
-                $finalPassword = $user->generatePassword($password);
+        $userToken = $user->generateToken();
+        $finalPassword = $user->generatePassword($password);
 
-                $user->name = $name;
-                $user->email = $email;
-                $user->password = $finalPassword;
-                $user->token = $userToken;
+        $user->name = $name;
+        $user->email = $email;
+        $user->password = $finalPassword;
+        $user->token = $userToken;
 
-                $auth = true;
+        $auth = true;
 
-                $userDao->create($user, $auth);
-            } else {
-                $message->setMessage("Usuário já cadastrado, tente outro e-mail.", "error", "back");
-            }
-        } else {
-            $message->setMessage("As senhas não são iguais.", "error", "back");
-        }
+        $userDao->create($user, $auth);
+      } else {
+        $message->setMessage("Usuário já cadastrado, tente outro e-mail.", "error", "back");
+      }
     } else {
-        $message->setMessage("Por favor, preencha todos os campos.", "error", "back");
+      $message->setMessage("As senhas não são iguais.", "error", "back");
     }
-  } else if($type === "login") {
+  } else {
+    $message->setMessage("Por favor, preencha todos os campos.", "error", "back");
+  }
+} else if ($type === "login") {
 
-    $email = filter_input(INPUT_POST, "email");
-    $password = filter_input(INPUT_POST, "password");
+  $email = filter_input(INPUT_POST, "email");
+  $password = filter_input(INPUT_POST, "password");
 
-    // Tenta autenticar usuário
-    if($userDao->authenticateUser($email, $password)) {
+  if ($userDao->authenticateUser($email, $password)) {
 
-      $message->setMessage("Seja bem-vindo!", "success", "index.php");
-
-    // Redireciona o usuário, caso não conseguir autenticar
-    } else {
-
-      $message->setMessage("Usuário e/ou senha incorretos.", "error", "back");
-
-    }
-
+    $message->setMessage("Seja bem-vindo!", "success", "index.php");
   } else {
 
-    $message->setMessage("Informações inválidas!", "error", "index.php");
-
+    $message->setMessage("Usuário e/ou senha incorretos.", "error", "back");
   }
+} else {
+
+  $message->setMessage("Informações inválidas!", "error", "index.php");
+}

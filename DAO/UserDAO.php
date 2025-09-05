@@ -48,22 +48,22 @@ class UserDAO implements UserDAOInterface
     }
 
 
-    public function update(User $user, $redirect = true){
+    public function update(User $user, $redirect = true)
+    {
 
         $stmt = $this->conn->prepare("UPDATE user SET name = :name, email = :email, password = :password, token= :token WHERE id = :id");
 
-    $stmt->bindParam(":name", $user->name);
-    $stmt->bindParam(":email", $user->email);
-    $stmt->bindParam(":password", $user->password);
-    $stmt->bindParam(":token", $user->token);
-    $stmt->bindParam(":id", $user->id);
+        $stmt->bindParam(":name", $user->name);
+        $stmt->bindParam(":email", $user->email);
+        $stmt->bindParam(":password", $user->password);
+        $stmt->bindParam(":token", $user->token);
+        $stmt->bindParam(":id", $user->id);
 
-    $stmt->execute();
+        $stmt->execute();
 
-    if ($redirect) {
+        if ($redirect) {
             $this->message->setMessage("Seja bem vindo", "success", "index.php");
         }
-
     }
 
 
@@ -126,7 +126,7 @@ class UserDAO implements UserDAOInterface
             return false;
         }
     }
-    public function findById($id) {}
+
 
 
     public function findByToken($token)
