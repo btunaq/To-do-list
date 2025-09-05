@@ -82,7 +82,7 @@ Abra o Painel de Controle do XAMPP e inicie os módulos Apache e MySQL.
 ### 3. Criar e Configurar o Banco de Dados
 Abra seu navegador e acesse o phpMyAdmin em http://localhost/phpmyadmin/.
 
-Crie um novo banco de dados com o nome uptarefas.
+Crie um novo banco de dados com o nome tarefas.
 
 Selecione o banco de dados tarefas, vá para a aba SQL e execute o script abaixo para criar tabela tarefa:
 
