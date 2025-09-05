@@ -56,6 +56,6 @@
         public function findAll();
         public function updateStatusCompleted($id);
         public function delete($id);
-        public function findCompletedTasks();
-        public function updateStatusOpen($id);
+        public function findOpenTasksByUserId();
+        public function updateStatusOpenByUserId($id);
     }

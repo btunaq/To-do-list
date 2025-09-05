@@ -1,15 +1,20 @@
 <?php
 
-include_once("connection.php");
-include_once("DAO/TarefaDAO.php");
-include_once("models/Tarefa.php");
+require_once("connection.php");
+require_once("url.php");
+require_once("models/Tarefa.php");
+require_once("models/User.php");
+require_once("DAO/TarefaDAO.php");
+require_once("DAO/UserDAO.php");
 
 $tarefaDAO = new TarefaDAO($conn);
 
+$userDao = new UserDAO($conn, $BASE_URL);
+$userData = $userDao->verifyToken(true);
 
 $action = $_POST['action'] ?? $_GET['action'] ?? null;
 
-if ($action) {
+if ($action && $userData) {
     switch ($action) {
         
         case 'create':
@@ -26,10 +31,10 @@ if ($action) {
             $newTarefa->setConclusion($conclusion);
             $newTarefa->setDescription($description);
 
-            $tarefaDAO->create($newTarefa);
+            $tarefaDAO->create($newTarefa, $userData->id);
             break;
 
-      
+        
         case 'delete':
             $id = $_GET['id'] ?? null;
             if ($id && is_numeric($id)) {
@@ -55,3 +60,4 @@ if ($action) {
 
 header("Location: index.php");
 exit();
+

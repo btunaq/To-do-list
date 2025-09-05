@@ -6,24 +6,31 @@ require_once("models/Message.php");
 require_once("url.php"); 
 require_once("DAO/UserDAO.php");
 
+// Instancia os DAOs
 $tarefaDAO = new TarefaDAO($conn);
+$userDao = new UserDAO($conn, $BASE_URL);
 
-// Busca apenas as tarefas com status 'Aberta'
-$tarefasAbertas = $tarefaDAO->findOpenTasks();
-$tarefasConcluidas = $tarefaDAO->findCompletedTasks();
+// Pega os dados do usuário, se ele estiver logado
+$userData = $userDao->verifyToken(false);
 
+// Prepara as variáveis de tarefas
+$tarefasAbertas = [];
+$tarefasConcluidas = [];
+
+// ALTERAÇÃO PRINCIPAL: Verifica se o usuário existe antes de buscar as tarefas
+if ($userData) {
+    // Se o usuário está logado, busca apenas as tarefas dele
+    $tarefasAbertas = $tarefaDAO->findOpenTasksByUserId($userData->id);
+    $tarefasConcluidas = $tarefaDAO->findCompletedTasksByUserId($userData->id);
+}
+
+// Lógica de mensagens (continua igual)
 $message = new Message($BASE_URL);
 $flassmessage = $message->getMessage();
 
 if(!empty($flassmessage["msg"])){
     $message->clearMessage();
 }
-
-$userDao = new UserDAO($conn, $BASE_URL);
-
-$userData = $userDao->verifyToken(false);
-
-
 ?>
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -48,7 +55,7 @@ $userData = $userDao->verifyToken(false);
                 <p class="msg <?= $flassmessage["type"]?>"><?= $flassmessage["msg"]?></p>
             </div>
         <?php endif; ?>
-</div>
+<div></div>
 
     
         

@@ -29,3 +29,4 @@
         public function verifyToken($protected = false);
         public function destroyToken();
     }
+    
