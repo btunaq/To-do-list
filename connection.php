@@ -1,12 +1,11 @@
 <?php 
 
   
-$host = "localhost";
-$port = "3307"; 
+$host = "localhost"; 
 $dbname = "todolist";
 $user = "root";
 $pass = "";
 
-    $conn = new PDO("mysql:dbname=$dbname;host=$host;port=$port", $user, $pass);
+    $conn = new PDO("mysql:dbname=$dbname;host=$host", $user, $pass);
 
 ?>
